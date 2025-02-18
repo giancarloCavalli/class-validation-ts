@@ -1,10 +1,15 @@
 import { OmitType } from '@nestjs/mapped-types'
-import { Receivable } from 'src/core/receivable/models/receivable.model'
+
+import { CreateReceivableDTOValidator } from '@/core/receivable/dtos'
+import { Receivable } from '@/core/receivable/models/receivable.model'
 
 export class CreateReceivableDTO extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt']) {
   constructor(props: CreateReceivableDTO) {
-    super(props)
+    super()
 
-    // TODO
+    const validator = CreateReceivableDTOValidator.getInstance()
+    validator.validateAndThrow(props)
+
+    Object.assign(this, props)
   }
 }

@@ -15,5 +15,7 @@ export class CoreException extends Error {
     this.data = coreError?.data
 
     Object.setPrototypeOf(this, CoreException.prototype)
+
+    this.name = CoreException.name
   }
 }
