@@ -13,8 +13,8 @@ export class CreateReceivableDTOValidator extends ClassValidator<CreateReceivabl
     this.ruleFor('amount')
       .must((amount) => typeof amount === 'number')
       .withMessage('should.be.number')
-      .greaterThanOrEqualTo(0)
-      .withMessage('should.be.positive.number')
+      .greaterThan(0)
+      .withMessage('should.be.greater.than.zero')
 
     this.ruleFor('issueDate')
       .must((issueDate) => issueDate instanceof Date && !isNaN(issueDate.getTime()))

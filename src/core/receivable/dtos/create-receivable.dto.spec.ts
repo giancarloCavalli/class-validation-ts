@@ -67,7 +67,7 @@ describe('CreateReceivableDTO', () => {
     expect(exception.message).toBe(`ValidationError occured in ${CreateReceivableDTOValidator.name}`)
     expect(exception.key).toBe('validation.error')
     expect(exception.validationErrors).toEqual({
-      amount: 'should.be.positive.number',
+      amount: 'should.be.greater.than.zero',
       customerId: 'not.empty',
       issueDate: 'should.be.date',
       dueDate: 'should.be.date',
