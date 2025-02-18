@@ -1,0 +1,63 @@
+@startuml classValidator
+
+interface IReceivableService {
+  create(command: CreateReceivableCommand)
+}
+
+class Receivable {
+  readonly id: string
+  readonly amount: number
+  readonly issueDate: Date
+  readonly createdAt: Date
+  readonly updatedAt: Date
+  readonly customerId: string
+
+  constructor(props: Receivable)
+}
+
+class CreateReceivableCommand extends Receivable {
+  constructor(props: CreateReceivableCommand)
+}
+
+note top of CreateReceivableCommand : extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt'])
+
+abstract class Validator<T> {
+  validate(obj: T): ValidationErrors<T>
+}
+
+note top of Validator : fluentvalidation-ts abstract class
+
+abstract ClassValidator<T> extends Validator {
+  validateAndThrow(object: T): void
+}
+
+class CreateReceivableCommandValidator extends ClassValidator {
+  - {static} validator: CreateReceivableCommandValidator
+
+  constructor()
+  {static} createInstance(): CreateReceivableCommandValidator
+  {static} getInstance(): CreateReceivableCommandValidator
+}
+
+exception CoreException extends Error {
+  readonly key: string
+  readonly message: string
+  readonly data?: object
+
+  constructor(coreError: CoreError)
+}
+
+interface CoreError {
+  key: string
+  message: string
+  data?: object
+}
+
+interface ValidationErrors<T> {
+  [Key in keyof T]?: string
+}
+
+exception ValidationException<T> extends CoreException {
+  constructor(error: Omit<CoreError, 'key'>, validationErrors: ValidationErrors<T>, submittedObj: T)
+}
+@enduml
