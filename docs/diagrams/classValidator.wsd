@@ -1,7 +1,7 @@
 @startuml classValidator
 
 interface IReceivableService {
-  create(command: CreateReceivableCommand)
+  create(command: CreateReceivableDTO)
 }
 
 class Receivable {
@@ -15,11 +15,11 @@ class Receivable {
   constructor(props: Receivable)
 }
 
-class CreateReceivableCommand extends Receivable {
-  constructor(props: CreateReceivableCommand)
+class CreateReceivableDTO extends Receivable {
+  constructor(props: CreateReceivableDTO)
 }
 
-note top of CreateReceivableCommand : extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt'])
+note top of CreateReceivableDTO : extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt'])
 
 abstract class Validator<T> {
   validate(obj: T): ValidationErrors<T>
@@ -31,12 +31,12 @@ abstract ClassValidator<T> extends Validator {
   validateAndThrow(object: T): void
 }
 
-class CreateReceivableCommandValidator extends ClassValidator {
-  - {static} validator: CreateReceivableCommandValidator
+class CreateReceivableDTOValidator extends ClassValidator {
+  - {static} validator: CreateReceivableDTOValidator
 
   constructor()
-  {static} createInstance(): CreateReceivableCommandValidator
-  {static} getInstance(): CreateReceivableCommandValidator
+  {static} createInstance(): CreateReceivableDTOValidator
+  {static} getInstance(): CreateReceivableDTOValidator
 }
 
 exception CoreException extends Error {
