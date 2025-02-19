@@ -19,7 +19,7 @@ class CreateReceivableDTO extends Receivable {
   constructor(props: CreateReceivableDTO)
 }
 
-note top of CreateReceivableDTO : extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt'])
+note bottom of CreateReceivableDTO : extends OmitType(Receivable, ['id', 'createdAt', 'updatedAt'])
 
 abstract class Validator<T> {
   validate(obj: T): ValidationErrors<T>
@@ -53,6 +53,10 @@ interface CoreError {
   data?: object
 }
 
+CoreException --[hidden]r> CoreError
+
+CoreException --[hidden]l> ValidationErrors
+
 interface ValidationErrors<T> {
   [Key in keyof T]?: string
 }
@@ -60,4 +64,6 @@ interface ValidationErrors<T> {
 exception ValidationException<T> extends CoreException {
   constructor(error: Omit<CoreError, 'key'>, validationErrors: ValidationErrors<T>, submittedObj: T)
 }
+
+
 @enduml
